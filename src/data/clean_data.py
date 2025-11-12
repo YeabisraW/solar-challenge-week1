@@ -22,8 +22,8 @@ def save_data(df, output_path):
 
 if __name__ == "__main__":
     # Replace 'your_file.csv' with your CSV filename
-    input_file = "../../data/benin-malanville.csv"
-    output_file = "../../data/benin-cleaned_data.csv"
+    input_file = "data/benin-malanville.csv"
+    output_file = "data/benin-cleaned_data.csv"
 
     data = load_data(input_file)
     print("Original data info:")
