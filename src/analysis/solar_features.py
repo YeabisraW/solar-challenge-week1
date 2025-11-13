@@ -1,36 +1,81 @@
 """
 solar_features.py
------------------
-This module provides utility functions to extract key solar energy features
-from cleaned CSV datasets such as GHI, DNI, and DHI.
+
+This module provides functions to compute daily solar energy features
+from cleaned solar datasets. It is designed to be imported and used
+by other scripts or notebooks.
 """
 
 import pandas as pd
 
-def load_data(file_path: str) -> pd.DataFrame:
-    """Load a cleaned CSV file into a pandas DataFrame."""
-    return pd.read_csv(file_path, parse_dates=["Timestamp"])
+def compute_daily_mean(df, column):
+    """
+    Compute the daily mean of a specified column in a DataFrame.
 
-def compute_daily_features(df: pd.DataFrame) -> pd.DataFrame:
-    """Compute daily mean and peak solar radiation values."""
-    df["Date"] = df["Timestamp"].dt.date
-    daily = df.groupby("Date").agg({
-        "GHI": ["mean", "max"],
-        "DNI": ["mean", "max"],
-        "DHI": ["mean", "max"]
-    })
-    daily.columns = ["_".join(col).strip() for col in daily.columns.values]
-    return daily.reset_index()
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The cleaned solar dataset with a 'Timestamp' column.
+    column : str
+        The name of the column to compute daily mean for (e.g., 'GHI').
 
-def save_features(daily_df: pd.DataFrame, output_file: str):
-    """Save the computed daily features to a CSV file."""
-    daily_df.to_csv(output_file, index=False)
-    print(f"✅ Saved daily features to {output_file}")
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with 'Date' and daily mean of the specified column.
+    
+    Example
+    -------
+    >>> df_daily = compute_daily_mean(df, 'GHI')
+    """
+    df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
+    daily_mean = df.groupby('Date')[column].mean().reset_index()
+    daily_mean.rename(columns={column: f'{column}_daily_mean'}, inplace=True)
+    return daily_mean
 
-if __name__ == "__main__":
-    input_file = "data/benin-malanville.csv"
-    output_file = "data/benin_daily_features.csv"
+def compute_daily_max(df, column):
+    """
+    Compute the daily maximum of a specified column.
 
-    df = load_data(input_file)
-    daily_features = compute_daily_features(df)
-    save_features(daily_features, output_file)
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The cleaned solar dataset with a 'Timestamp' column.
+    column : str
+        Column name to compute daily max (e.g., 'DNI').
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with 'Date' and daily max of the specified column.
+    
+    Example
+    -------
+    >>> df_daily_max = compute_daily_max(df, 'DNI')
+    """
+    df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
+    daily_max = df.groupby('Date')[column].max().reset_index()
+    daily_max.rename(columns={column: f'{column}_daily_max'}, inplace=True)
+    return daily_max
+
+def merge_daily_features(*dfs):
+    """
+    Merge multiple daily feature DataFrames into a single DataFrame.
+
+    Parameters
+    ----------
+    *dfs : pd.DataFrame
+        Multiple daily feature DataFrames (with 'Date' column).
+
+    Returns
+    -------
+    pd.DataFrame
+        Single DataFrame with all daily features merged on 'Date'.
+    
+    Example
+    -------
+    >>> df_merged = merge_daily_features(df_ghi, df_dni)
+    """
+    from functools import reduce
+    df_merged = reduce(lambda left, right: pd.merge(left, right, on='Date'), dfs)
+    return df_merged
