@@ -1,11 +1,10 @@
-
 # Solar Challenge Week 1
 
 ## Project Overview
 This project is part of the AI Mastery training. It implements a modular Python package for solar energy analysis with a structured approach including data handling, modeling, plotting, and testing. The aim is to provide clean, reusable code and demonstrate progress on the challenge requirements.
 
 ## Folder Structure
-- solar-challenge-week1/
+solar-challenge-week1/
 │
 ├─ src/ # Python modules and scripts
 │ ├─ data/ # Data handling and cleaning scripts
@@ -27,22 +26,40 @@ This project is part of the AI Mastery training. It implements a modular Python 
 ├─ requirements.txt # Python dependencies
 └─ .gitignore # Ignored files
 
----
-
 ## Setup
-
-### 1. Create a virtual environment
+Create a Python virtual environment and install dependencies:
 ```bash
 python -m venv venv
+# Windows
 venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
 pip install -r requirements.txt
-###Usage
-#Run the main analysis
-python src/main.py # This runs the full pipeline: loads data, cleans it, performs analysis, and saves plots and results in theCI/CD
+```
 
-#GitHub Actions are set up for automated testing and linting.
+## Usage
+```bash
+python src/main.py
+jupyter notebook notebooks/<notebook_name>.ipynb
+pytest tests/
+git checkout -b feature-name
+```
 
-#All commits must pass tests before merging to the main branch. reports/ folder.
+## CI/CD
+GitHub Actions are set up for automated testing and linting.
+All commits must pass tests before merging to the main branch.
 
-### This version is **complete, structured, and easy to follow** for anyone: it clearly explains setup, usage, testing, and contribution steps.  
+## Contributing
+Fork the repository.
+Create a new branch: git checkout -b feature-name
+Write clean, documented code and add tests.
+Commit with descriptive messages.
+Submit a pull request for review.
 
+## License
+MIT License
+
+## Contact
+Maintainer: Yeabisra Wubishet
+GitHub: https://github.com/YeabisraW/solar-challenge-week1
+Email: wubyab@gmail.com

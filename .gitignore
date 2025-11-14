@@ -1,2 +1,21 @@
-# Ignore CSV data files
-data/*.csv
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+*.manifest
+*.spec
+
+# Virtual environment
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data files
+data/
+*.csv
+
