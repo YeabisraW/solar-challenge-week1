@@ -55,6 +55,28 @@ Create a new branch: git checkout -b feature-name
 Write clean, documented code and add tests.
 Commit with descriptive messages.
 Submit a pull request for review.
+Exploratory Data Analysis (EDA) and Cross-Country Comparison
+
+Detailed data profiling, cleaning, and analysis of solar datasets for **Benin, Sierra Leone, and Togo**.
+
+### Data Cleaning & Profiling
+- Checked for missing values and outliers using **Z-scores**.
+- Cleaned datasets were exported as CSV files in the `data/` folder.
+
+### Visual Analysis
+- Time series plots of **GHI, DNI, DHI** for each country.
+- Correlation heatmaps to show relationships between solar metrics.
+- Scatter plots and histograms to explore distributions and trends.
+
+### Cross-Country Comparison
+- Combined cleaned datasets to compare solar metrics across countries.
+- Boxplots highlight differences in **GHI, DNI, DHI** between countries.
+- Scatter plots visualize relationships and variations across countries.
+- ANOVA statistical tests were performed to determine if differences are significant (p < 0.05).
+
+### Outputs
+- Updated EDA notebooks are in the `notebooks/` folder.
+- Generated plots are saved in the `reports/` folder for reference.
 
 ## License
 MIT License
